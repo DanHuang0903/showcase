@@ -1,4 +1,4 @@
-import spreadsheetId,range,apiKey from "key.js";
+import {spreadsheetId,range,API_KEY} from "key.js";
 
 function chart(dataset){
 
