@@ -1,41 +1,62 @@
-//import {spreadsheetId,range,API_KEY} from "/key.js";
 
-function chart(dataset){
+async function chart(){
+    let chartdataset = [];
+    let content = [];
+    let player = [];
+    let player_filtered = [];
+    const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQS8ZgEo2FxRCUQi562fZ72A6jeEO3jkWMR1VRDgossR_-mMUhVFTJw0avWiTqS5-Z4npbjWX1sC5Ig/pub?output=csv';
+    const data = await d3.csv(csvUrl);
+    data.forEach( (c, row) =>{
+        if(c['内容'] != '抽奖'){
+        content.push(c['内容'])
+        let people = c['参与者'].split('，');
+        people.forEach((p,i) => {
+            people[i] = p.split('-')[0];
+            player_filtered.push(people[i]);
+        });
+        player[row] = people;
+        
+        }
+    });
 
-  const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQS8ZgEo2FxRCUQi562fZ72A6jeEO3jkWMR1VRDgossR_-mMUhVFTJw0avWiTqS5-Z4npbjWX1sC5Ig/pubhtml';
-  d3.csv(csvUrl).then(function(data){
-    console.log(data);
-  })
+    player = player.filter(item=>item);
 
+    player_filtered = [...new Set(player_filtered)];
 
-// const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?key=${API_KEY}`;
+    player.forEach((pl,index)=>{
+      pl.forEach((n)=>{
+        if(content.length > player_filtered.length){
+          chartdataset.push([content[index],n,1]);
+        }else{
+          chartdataset.push([n,content[index],1]);
+        }
+      })
+    });
+  
+    let index = chartdataset.findIndex(subArray => subArray.includes('待定'));
+    if (index !== -1) {
+        let item = chartdataset.splice(index, 1)[0]; 
+        chartdataset.push(item); 
+    }
 
-// fetch(url)
-//   .then(response => {
-//     if (!response.ok) {
-//         throw new Error('Network response was not ok');
-//     }
-//     return response.json();
-//   })
-//   .then(data => {
-//     console.log(data.values);
-//   })
-//   .catch(error => console.log('Error:', error));
-
+    console.log(chartdataset)
 	 d3.select("#chart").selectAll('svg').remove();
 
-	 var width = 800;
- 	 var height = 500;
- 	 var bar_color ={黄丹:"#D8BFD8", 蓝心:"#20B2AA", 艺洁:"#FFB6C1",小喵:"#FAFAD2",文奕:"#ADD8E6"};
+	 let width = 800;
+ 	 let height = 600;
+  
+   let mainBar = content.length > player_filtered.length ? content : player_filtered
+   let bar_color = getColors(mainBar);
+    console.log(bar_color);
 
-   var svg = d3.select("#chart")
+   let svg = d3.select("#chart")
      			   .append("svg")
      			   .attr("width", width)
      			   .attr("height",height)
      			   .attr("id","snake_svg");
 
-   var defs = svg.append("defs");
- 	 var filter = defs.append("filter")
+   let defs = svg.append("defs");
+ 	 let filter = defs.append("filter")
     .attr("id", "drop-shadow2")
     .attr("height", "125%");
     filter.append("feGaussianBlur")
@@ -49,7 +70,7 @@ function chart(dataset){
     .attr("dy", 5)
     .attr("result", "offsetBlur");
 
- 	 var feMerge = filter.append("feMerge");
+ 	 let feMerge = filter.append("feMerge");
 
 	  feMerge.append("feMergeNode")
 	    .attr("in", "offsetBlur")
@@ -57,11 +78,11 @@ function chart(dataset){
 	    .attr("in", "SourceGraphic");
 	 
 
-	  var g =[svg.append("g").attr("transform","translate(250,40)")
+	  let g =[svg.append("g").attr("transform","translate(250,40)")
 	    ,svg.append("g").attr("transform","translate(650,100)")];
 
-	   var bp=[ viz.bP()
-      .data(dataset)
+	   let bp=[ viz.bP()
+      .data(chartdataset)
       .min(10)
       .pad(2)
       .height(height-50)
@@ -69,7 +90,7 @@ function chart(dataset){
       .barSize(45)
       .fill(d=>bar_color[d.primary])    
     ,viz.bP()
-      .data(dataset)
+      .data(chartdataset)
       .value(d=>d[3])
       .min(10)
       .pad(1)
@@ -96,10 +117,11 @@ function chart(dataset){
     .attr("x",d=>(d.part=="primary"? -105: 100))
     .attr("y",d=>(d.part=="primary"? +5: +4))
     .text(d=>d.key)
-    .style("fill", "#5C6F7C")
+    .style("fill", d=>(d.key == "待定" ? "red" : "#5C6F7C"))
     .style("font-size",d=>(d.part == "primary"? "1.2rem":"1rem"))
     .attr("text-anchor",d=>(d.part=="primary"? "end": "start"))
     .style("display", function(d) { return d.value === 0 ? "none" : null; });
+
   
   g[i].selectAll(".mainBars").append("text").attr("class","perc")
     .attr("x",d=>(d.part=="primary"? -30: 40))
@@ -124,21 +146,17 @@ function mouseover(d){
   });
   d3.select(this)
   .selectAll("text")
-  .style("fill","#69901D")
+  .style("fill", d=>(d.key == "待定" ? "red" : "#69901D"))
   .style("font-weight","bold");
-  
-
-
-
-
-
 
 }
+
 function mouseout(d){
   [0].forEach(function(i){
     bp[i].mouseout(d);
     g[i].selectAll(".mainBars").select(".label")
-    .style("display", function(d) { return d.value === 0 ? "none" : null; });
+    .style("display", function(d) { return d.value === 0 ? "none" : null; })
+    .style("fill", d=>(d.key == "待定" ? "red" : "#5C6F7C"));
     g[i].selectAll(".mainBars").select(".perc")
     .text(function(d){ return d3.format(",")(d.value)})
     .style("display", function(d) { return d.value === 0 ? "none" : null; });
@@ -146,7 +164,7 @@ function mouseout(d){
   });
   d3.select(this)
   .selectAll("text")
-  .style("fill","#5C6F7C")
+  .style("fill", d=>(d.key == "待定" ? "red" : "#5C6F7C"))
   .style("font-weight","");
 
   d3.select(this).style("border","0px solid #F15D22");
@@ -155,4 +173,14 @@ function mouseout(d){
 
 d3.select(self.frameElement).style("height", "800px");
 
+}
+
+function getColors(bars){
+  let playerColor = {};
+  const colors = ["#9370DB","#D8BFD8", "#20B2AA", "#DB7093","#FFB6C1", "#228B22","#FAFAD2","#FFA500", "#ADD8E6","#00CED1","#87CEFA","#C71585","#008080","#FFD700","#FF7F50","#483D8B"];
+  bars.forEach((p,i) => {
+    playerColor[p] = colors[i];
+  });
+
+  return playerColor;
 }
