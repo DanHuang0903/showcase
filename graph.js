@@ -1,26 +1,26 @@
-import {spreadsheetId,range,API_KEY} from "/key.js";
+//import {spreadsheetId,range,API_KEY} from "/key.js";
 
 function chart(dataset){
 
-  // const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQS8ZgEo2FxRCUQi562fZ72A6jeEO3jkWMR1VRDgossR_-mMUhVFTJw0avWiTqS5-Z4npbjWX1sC5Ig/pubhtml';
-  // d3.csv(csvUrl).then(function(data){
-  //   console.log(data);
-  // })
-
-
-const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?key=${API_KEY}`;
-
-fetch(url)
-  .then(response => {
-    if (!response.ok) {
-        throw new Error('Network response was not ok');
-    }
-    return response.json();
+  const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQS8ZgEo2FxRCUQi562fZ72A6jeEO3jkWMR1VRDgossR_-mMUhVFTJw0avWiTqS5-Z4npbjWX1sC5Ig/pubhtml';
+  d3.csv(csvUrl).then(function(data){
+    console.log(data);
   })
-  .then(data => {
-    console.log(data.values);
-  })
-  .catch(error => console.log('Error:', error));
+
+
+// const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?key=${API_KEY}`;
+
+// fetch(url)
+//   .then(response => {
+//     if (!response.ok) {
+//         throw new Error('Network response was not ok');
+//     }
+//     return response.json();
+//   })
+//   .then(data => {
+//     console.log(data.values);
+//   })
+//   .catch(error => console.log('Error:', error));
 
 	 d3.select("#chart").selectAll('svg').remove();
 
