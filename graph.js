@@ -1,4 +1,4 @@
-import {spreadsheetId,range,API_KEY} from "key.js";
+import {spreadsheetId,range,API_KEY} from "/key.js";
 
 function chart(dataset){
 
@@ -8,7 +8,7 @@ function chart(dataset){
   // })
 
 
-const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?key=${apiKey}`;
+const url = `https://sheets.googleapis.com/v4/spreadsheets/${spreadsheetId}/values/${range}?key=${API_KEY}`;
 
 fetch(url)
   .then(response => {
