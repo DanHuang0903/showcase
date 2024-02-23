@@ -6,6 +6,8 @@ async function chart(){
     let player_filtered = [];
     const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQS8ZgEo2FxRCUQi562fZ72A6jeEO3jkWMR1VRDgossR_-mMUhVFTJw0avWiTqS5-Z4npbjWX1sC5Ig/pub?output=csv';
     const data = await d3.csv(csvUrl);
+    data.splice(data.length - 1, 1);
+    console.log(data);
     data.forEach( (c, row) =>{
         if(c['内容'] != '抽奖'){
         content.push(c['内容'])
