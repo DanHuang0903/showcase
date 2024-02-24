@@ -41,7 +41,6 @@ async function chart(){
         chartdataset.push(item); 
     }
 
-    console.log(chartdataset)
 	 d3.select("#chart").selectAll('svg').remove();
 
 	 let width = 800;

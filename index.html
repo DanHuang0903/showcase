@@ -16,10 +16,18 @@
 
 
 <body>
-	<div id="chart"></div>
+      <div id="show" class="row">
+            <div id="chart" class="col-l-6 col-xs-10" style="overflow: scroll;"></div>
+            <div id="attire" class="row">
+                  
+            </div>
+      </div>
+      <div id="guests">
+
+      </div>
+	
 </body>
 <script src="graph.js"></script>
-<script type="module" src="data.js"></script>
 
 
 <!-- Popper JS -->
@@ -30,10 +38,25 @@
 
 <script type="text/javascript">
 
-   $(document).ready(function () {
+      
+      $(document).ready(function () {
 
       chart();
+      var folder = "/";
+       $.ajax({
+        url: folder,
+        success: function (data) {
+            console.log(data);
+            $(data).find("a").attr("href", function (i, val) {
+                if( val.match(/\.(jpe?g|png|PNG|JPG|jpg|gif)$/) ) { 
+                    $("#attire").append("<img src='"+ folder + val +"'>");
+                } 
+            });
+        }
       });
-   
+      });
+ 
+
+
 </script>
 </html>
