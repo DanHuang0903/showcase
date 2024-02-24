@@ -9,7 +9,7 @@ async function chart(){
     data.splice(data.length - 1, 1);
     console.log(data);
     data.forEach( (c, row) =>{
-        if(c['内容'] != '抽奖'){
+        if(c['内容'] != ('抽奖' || '')){
         content.push(c['内容'])
         let people = c['参与者'].split('，');
         people.forEach((p,i) => {
