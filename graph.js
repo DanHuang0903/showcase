@@ -5,6 +5,7 @@ async function chart(){
     let player = [];
     let player_filtered = [];
     let p_attires = {};
+    let show_attires = {};
     const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQS8ZgEo2FxRCUQi562fZ72A6jeEO3jkWMR1VRDgossR_-mMUhVFTJw0avWiTqS5-Z4npbjWX1sC5Ig/pub?output=csv';
     const data = await d3.csv(csvUrl);
     data.splice(data.length - 1, 1);
@@ -12,11 +13,16 @@ async function chart(){
     data.forEach( (c, row) =>{
         if(c['内容'] != ('抽奖' || '')){
         content.push(c['内容'])
+
         let people = c['参与者'].split('，');
+        show_attires[c['内容']] = [];
+
         people.forEach((p,i) => {
             people[i] = p.split('-')[0];
             let current_attire = p.split('-')[1];
-            
+
+            show_attires[c['内容']].push(current_attire);
+
             if(!Object.keys(p_attires).includes(people[i])){
                 p_attires[people[i]] = [];
                 p_attires[people[i]].push(current_attire);
@@ -31,7 +37,7 @@ async function chart(){
     });
 
     player = player.filter(item=>item);
-
+    console.log(show_attires);
     player_filtered = [...new Set(player_filtered)];
 
     player.forEach((pl,index)=>{
@@ -52,7 +58,7 @@ async function chart(){
 
 	 d3.select("#chart").selectAll('svg').remove();
 
-	 let width = 800;
+	 let width = 780;
  	 let height = 600;
   
    let mainBar = content.length > player_filtered.length ? content : player_filtered
@@ -96,7 +102,7 @@ async function chart(){
       .pad(2)
       .height(height-50)
       .width(width/3)
-      .barSize(45)
+      .barSize(40)
       .fill(d=>bar_color[d.primary])    
     ,viz.bP()
       .data(chartdataset)
@@ -105,7 +111,7 @@ async function chart(){
       .pad(1)
       .height(height-50)
       .width(width/3)
-      .barSize(45)
+      .barSize(40)
       .fill(d=>bar_color[d.primary])
   ];
 
@@ -123,11 +129,11 @@ async function chart(){
 
 
   g[i].selectAll(".mainBars").append("text").attr("class","label")
-    .attr("x",d=>(d.part=="primary"? -105: 100))
+    .attr("x",d=>(d.part=="primary"? -80: 85))
     .attr("y",d=>(d.part=="primary"? +5: +4))
     .text(d=>d.key)
     .style("fill", d=>(d.key == "待定" ? "red" : "#5C6F7C"))
-    .style("font-size",d=>(d.part == "primary"? "1.2rem":"1rem"))
+    .style("font-size",d=>(d.part == "primary"? "1.1rem":"1rem"))
     .attr("text-anchor",d=>(d.part=="primary"? "end": "start"))
     .style("display", function(d) { return d.value === 0 ? "none" : null; });
 
@@ -137,7 +143,7 @@ async function chart(){
     .attr("y",d=>+6)
     .text(function(d){ return d3.format(",")(d.value)})
     .style("fill", "#5C6F7C")
-    .style("font-size",d=>(d.part == "primary"? "1.2rem":"1rem"))
+    .style("font-size",d=>(d.part == "primary"? "1.1rem":"1rem"))
     .attr("text-anchor",d=>(d.part=="primary"? "end": "start"))
     .style("display", function(d) { return d.value === 0 ? "none" : null; });
 });
@@ -158,14 +164,27 @@ function mouseover(d){
   .style("fill", d=>(d.key == "待定" ? "red" : "#69901D"))
   .style("font-weight","bold");
   let current = d.key;
-  console.log($('.cloth')[0].src.includes(encodeURIComponent('诸葛亮')));
-  p_attires[current].forEach(pa => {
-    $('.cloth').each((index,c) => {
-      if(c.src.includes(encodeURIComponent(pa))){
-        $(c).removeClass('d-none');
-      }
-    })
-  })
+
+ if(p_attires[current]){
+    p_attires[current].forEach(pa => {
+      $('.cloth').each((index,c) => {
+        if(c.src.includes(encodeURIComponent(pa))){
+          $(c).removeClass('d-none');
+        }
+      })
+    });
+  }else if(show_attires[current]){
+    show_attires[current].forEach(sa => {
+      $('.cloth').each((i,e) => {
+        if(e.src.includes(encodeURIComponent(sa))){
+          $(e).removeClass('d-none');
+        }
+      })
+    
+    });
+  }
+  
+
 
 }
 
