@@ -17,9 +17,56 @@
 
 <body>
       <div id="show" class="row">
-            <div id="chart" class="col-l-6 col-xs-10" style="overflow: scroll;"></div>
-            <div id="attire" class="row">
-                  
+            <div id="chart" class="col-l-6 col-md-6 col-xs-12 p-4" style="overflow: scroll;"></div>
+            <div id="attire" class="col-l-6 col-md-6 col-xs-12 p-4" >
+                  <div class="row p-2">
+                        <img src="/img/诸葛亮.JPG" class="col-l-4 col-md-4 col-xs-4 cloth d-none" />
+                        <img src="/img/曲裾.JPG" class="col-l-4 col-md-4 col-xs-4 cloth d-none"/>
+                        <img src="/img/直裾1.JPG" class="col-l-4 col-md-4 col-xs-4 cloth d-none"/>
+                  </div>
+                  <div class="row p-2">
+                        <img src="/img/直裾2.JPG" class="col-l-4 col-md-4 col-xs-4 cloth d-none" />
+                        <img src="/img/紫色魏晋.JPG" class="col-l-4 col-md-4 col-xs-4 cloth d-none" />
+                        <img src="/img/黑色魏晋.JPG" class="col-l-4 col-md-4 col-xs-4 cloth d-none" />
+                  </div>
+                  <div class="row p-2">
+                        <img src="/img/灰白魏晋.JPG" class="col-l-4 col-md-4 col-xs-4 cloth d-none" />
+                        <img src="/img/将军服.JPG" class="col-l-4 col-md-4 col-xs-4 cloth d-none" />
+                        <img src="/img/齐胸儒裙1.JPG" class="col-l-4 col-md-4 col-xs-4 cloth d-none" />
+                  </div>
+                  <div class="row p-2">
+                        <img src="/img/齐胸儒裙2.JPG" class="col-l-4 col-md-4 col-xs-4 cloth d-none" />
+                        <img src="/img/齐胸儒裙3.JPG" class="col-l-4 col-md-4 col-xs-4 cloth d-none" />
+                        <img src="/img/唐褙子.jpg" class="col-l-4 col-md-4 col-xs-4 cloth d-none" />
+                  </div>
+                  <div class="row p-2">
+                        <img src="/img/唐诃子裙1.JPG" class="col-l-4 col-md-4 col-xs-4 cloth d-none" />
+                        <img src="/img/唐诃子裙2.JPG" class="col-l-4 col-md-4 col-xs-4 cloth d-none" />
+                        <img src="/img/唐制圆领衫.JPG" class="col-l-4 col-md-4 col-xs-4 cloth d-none" />
+                  </div>
+                  <div class="row p-2">
+                        <img src="/img/宋制大袖长衫.JPG" class="col-l-4 col-md-4 col-xs-4 cloth d-none" />
+                        <img src="/img/宋制婚服女.JPG" class="col-l-4 col-md-4 col-xs-4 cloth d-none" />
+                        <img src="/img/宋制婚服男.JPG" class="col-l-4 col-md-4 col-xs-4 cloth d-none" />
+                  </div>
+                  <div class="row p-2">
+                        <img src="/img/明制云肩马面裙.JPG" class="col-l-4 col-md-4 col-xs-4 cloth d-none" />
+                        <img src="/img/明制冬装马面裙.JPG" class="col-l-4 col-md-4 col-xs-4 cloth d-none" />
+                        <img src="/img/明制马面裙男.JPG" class="col-l-4 col-md-4 col-xs-4 cloth d-none" />
+                  </div>
+                  <div class="row p-2">
+                        <img src="/img/锦衣卫.JPG" class="col-l-4 col-md-4 col-xs-4 cloth d-none" />
+                        <img src="/img/清汉服.JPG" class="col-l-4 col-md-4 col-xs-4 cloth d-none" />
+                        <img src="/img/满清旗服.PNG" class="col-l-4 col-md-4 col-xs-4 cloth d-none" />
+                  </div>
+                  <div class="row p-2">
+                        <img src="/img/学生装.JPG" class="col-l-4 col-md-4 col-xs-4 cloth d-none" />
+                        <img src="/img/老爷装.jpg" class="col-l-4 col-md-4 col-xs-4 cloth d-none" />
+                        <img src="/img/旗袍.JPG" class="col-l-4 col-md-4 col-xs-4 cloth d-none" />
+                  </div>    
+                  <div class="row p-2">
+                        <img src="/img/中山装.JPG" class="col-l-4 col-md-4 col-xs-4 cloth d-none" />
+                  </div>                 
             </div>
       </div>
       <div id="guests">
@@ -42,18 +89,18 @@
       $(document).ready(function () {
 
       chart();
-      var folder = "/";
-       $.ajax({
-        url: folder,
-        success: function (data) {
-            console.log(data);
-            $(data).find("a").attr("href", function (i, val) {
-                if( val.match(/\.(jpe?g|png|PNG|JPG|jpg|gif)$/) ) { 
-                    $("#attire").append("<img src='"+ folder + val +"'>");
-                } 
-            });
-        }
-      });
+      var folder = "/img";
+      //  $.ajax({
+      //   url: folder,
+      //   success: function (data) {
+      //       console.log(data);
+      //       $(data).find("img").attr("src", function (i, val) {
+      //           if( val.match(/\.(jpe?g|png|PNG|JPG|jpg|gif)$/) ) { 
+      //               $("#attire").append("<img src='"+ folder + val +"'>");
+      //           } 
+      //       });
+      //   }
+      // });
       });
  
 

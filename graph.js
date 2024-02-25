@@ -4,17 +4,26 @@ async function chart(){
     let content = [];
     let player = [];
     let player_filtered = [];
+    let p_attires = {};
     const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQS8ZgEo2FxRCUQi562fZ72A6jeEO3jkWMR1VRDgossR_-mMUhVFTJw0avWiTqS5-Z4npbjWX1sC5Ig/pub?output=csv';
     const data = await d3.csv(csvUrl);
     data.splice(data.length - 1, 1);
-    console.log(data);
+
     data.forEach( (c, row) =>{
         if(c['内容'] != ('抽奖' || '')){
         content.push(c['内容'])
         let people = c['参与者'].split('，');
         people.forEach((p,i) => {
             people[i] = p.split('-')[0];
-            player_filtered.push(people[i]);
+            let current_attire = p.split('-')[1];
+            
+            if(!Object.keys(p_attires).includes(people[i])){
+                p_attires[people[i]] = [];
+                p_attires[people[i]].push(current_attire);
+            }else{
+              p_attires[people[i]].push(current_attire);
+            }
+  
         });
         player[row] = people;
         
@@ -48,7 +57,6 @@ async function chart(){
   
    let mainBar = content.length > player_filtered.length ? content : player_filtered
    let bar_color = getColors(mainBar);
-    console.log(bar_color);
 
    let svg = d3.select("#chart")
      			   .append("svg")
@@ -149,6 +157,15 @@ function mouseover(d){
   .selectAll("text")
   .style("fill", d=>(d.key == "待定" ? "red" : "#69901D"))
   .style("font-weight","bold");
+  let current = d.key;
+  console.log($('.cloth')[0].src.includes(encodeURIComponent('诸葛亮')));
+  p_attires[current].forEach(pa => {
+    $('.cloth').each((index,c) => {
+      if(c.src.includes(encodeURIComponent(pa))){
+        $(c).removeClass('d-none');
+      }
+    })
+  })
 
 }
 
@@ -169,6 +186,11 @@ function mouseout(d){
   .style("font-weight","");
 
   d3.select(this).style("border","0px solid #F15D22");
+  $('.cloth').each((i,c) => {
+   if(!Array.from(c.classList).includes('d-none')){
+    $(c).addClass('d-none');
+   };
+  })
 }
 
 
