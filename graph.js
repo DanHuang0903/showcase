@@ -56,10 +56,13 @@ async function chart(){
         chartdataset.push(item); 
     }
 
+    
 	 d3.select("#chart").selectAll('svg').remove();
 
 	 let width = 780;
  	 let height = 600;
+
+
   
    let mainBar = content.length > player_filtered.length ? content : player_filtered
    let bar_color = getColors(mainBar);
@@ -95,6 +98,8 @@ async function chart(){
 
 	  let g =[svg.append("g").attr("transform","translate(250,40)")
 	    ,svg.append("g").attr("transform","translate(650,100)")];
+
+    
 
 	   let bp=[ viz.bP()
       .data(chartdataset)
@@ -147,6 +152,8 @@ async function chart(){
     .attr("text-anchor",d=>(d.part=="primary"? "end": "start"))
     .style("display", function(d) { return d.value === 0 ? "none" : null; });
 });
+
+
 function mouseover(d){
   [0].forEach(function(i){
     bp[i].mouseover(d);
@@ -183,8 +190,6 @@ function mouseover(d){
     
     });
   }
-  
-
 
 }
 
