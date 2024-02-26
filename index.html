@@ -10,8 +10,12 @@
       <!-- Material Design Bootstrap -->
 
 </head>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script async defer src="https://apis.google.com/js/api.js"></script>
 <script src="jquery/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+
+<script src="jquery-ui.js"></script>
 <script type="text/javascript" src="d3/d3.min.js"></script>
 <script type="text/javascript" src="viz.v1.1.0.min.js"></script>
 
@@ -69,8 +73,11 @@
       </div>      
       <div id="guests" class="row m-1 mt-5 shadow-lg">
             <h3 class="display-5 col-xs-12 col-md-12 col-l-12 text-light bg-dark p-2">观众信息</h3>
-            <div id="guest-data col-l-12 col-md-12 col-xs-12 row">
-                  <div id="guest-chart"></div>
+            <div class="col-l-8 col-md-8 col-xs-12"  style="overflow-x: scroll;">
+                  <canvas id="guest-chart" class="m-2"></canvas>
+            </div>
+            <div class="col-l-4 col-md-4col-xs-12"  style="overflow-x: scroll;">
+                  <canvas id="guest-chart2" class="m-2"></canvas>
             </div>
       </div>
 	
@@ -92,6 +99,7 @@
 
       chart();
       guestChart();
+     // drawChart();
   
       });
       $('.cloth').each((i,e) => {
@@ -100,7 +108,6 @@
             
       })
  
-
 
 </script>
 </html>
