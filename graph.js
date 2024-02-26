@@ -60,7 +60,7 @@ async function chart(){
 	 d3.select("#chart").selectAll('svg').remove();
 
 	 let width = 780;
- 	 let height = 600;
+ 	 let height = 610;
 
 
   
@@ -85,7 +85,7 @@ async function chart(){
     filter.append("feOffset")
     .attr("in", "blur")
     .attr("dx", 5)
-    .attr("dy", 5)
+    .attr("dy", 1)
     .attr("result", "offsetBlur");
 
  	 let feMerge = filter.append("feMerge");
@@ -96,25 +96,25 @@ async function chart(){
 	    .attr("in", "SourceGraphic");
 	 
 
-	  let g =[svg.append("g").attr("transform","translate(250,40)")
+	  let g =[svg.append("g").attr("transform","translate(250,20)")
 	    ,svg.append("g").attr("transform","translate(650,100)")];
 
     
 
 	   let bp=[ viz.bP()
       .data(chartdataset)
-      .min(10)
-      .pad(2)
-      .height(height-50)
+      .min(20)
+      .pad(4)
+      .height(height-20)
       .width(width/3)
       .barSize(40)
       .fill(d=>bar_color[d.primary])    
     ,viz.bP()
       .data(chartdataset)
       .value(d=>d[3])
-      .min(10)
-      .pad(1)
-      .height(height-50)
+      .min(20)
+      .pad(4)
+      .height(height-20)
       .width(width/3)
       .barSize(40)
       .fill(d=>bar_color[d.primary])
@@ -135,7 +135,7 @@ async function chart(){
 
   g[i].selectAll(".mainBars").append("text").attr("class","label")
     .attr("x",d=>(d.part=="primary"? -80: 85))
-    .attr("y",d=>(d.part=="primary"? +5: +4))
+    .attr("y",d=>(d.part=="primary"? +1: +1))
     .text(d=>d.key)
     .style("fill", d=>(d.key == "待定" ? "red" : "#5C6F7C"))
     .style("font-size",d=>(d.part == "primary"? "1.1rem":"1rem"))
@@ -145,7 +145,7 @@ async function chart(){
   
   g[i].selectAll(".mainBars").append("text").attr("class","perc")
     .attr("x",d=>(d.part=="primary"? -30: 40))
-    .attr("y",d=>+6)
+    .attr("y",d=>+2)
     .text(function(d){ return d3.format(",")(d.value)})
     .style("fill", "#5C6F7C")
     .style("font-size",d=>(d.part == "primary"? "1.1rem":"1rem"))
