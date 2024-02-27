@@ -5,7 +5,6 @@ async function guestChart(){
   const guest = await d3.csv(guestUrl);
     const data = {};
    guest.splice(guest.length - 1, 1); 
-   console.log(guest)
 
    let labels = guest.columns;
    labels.splice(3,1);
@@ -102,6 +101,7 @@ function drawPie(data){
     let girls = data.女孩人数;
     let boys = data.男孩人数;
     let parents = data.成人人数;
+   
 
     girls.forEach(g => {
         girlsTotal += parseInt(g);
@@ -115,9 +115,7 @@ function drawPie(data){
         parentsTotal += parseInt(p);
     })
 
-    console.log(girlsTotal);
-    console.log(boysTotal);
-    console.log(parentsTotal)
+    let total = parseInt(girlsTotal) + parseInt(boysTotal) + parseInt(parentsTotal);
 
     let pie = $('#guest-chart2');
     pie.height(320);
@@ -149,7 +147,7 @@ function drawPie(data){
                 },
                 title: {
                 display: true,
-                text: '总数统计',
+                text: "总数统计 - " + total + " in total",
                 font:{
                 size: 16
                 }

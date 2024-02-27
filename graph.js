@@ -37,7 +37,7 @@ async function chart(){
     });
 
     player = player.filter(item=>item);
-    console.log(show_attires);
+ 
     player_filtered = [...new Set(player_filtered)];
 
     player.forEach((pl,index)=>{
@@ -100,7 +100,7 @@ async function chart(){
 	    ,svg.append("g").attr("transform","translate(650,100)")];
 
     
-
+    console.log(chartdataset)
 	   let bp=[ viz.bP()
       .data(chartdataset)
       .min(20)
@@ -111,7 +111,7 @@ async function chart(){
       .fill(d=>bar_color[d.primary])    
     ,viz.bP()
       .data(chartdataset)
-      .value(d=>d[3])
+      .value(d=>d[0])
       .min(20)
       .pad(4)
       .height(height-20)
