@@ -39,7 +39,8 @@ async function chart(){
     player = player.filter(item=>item);
  
     player_filtered = [...new Set(player_filtered)];
-
+    console.log(content)
+    console.log(player)
     player.forEach((pl,index)=>{
       pl.forEach((n)=>{
         if(content.length > player_filtered.length){
@@ -49,6 +50,7 @@ async function chart(){
         }
       })
     });
+    console.log(chartdataset)
   
     let index = chartdataset.findIndex(subArray => subArray.includes('待定'));
     if (index !== -1) {
