@@ -39,8 +39,6 @@ async function chart(){
     player = player.filter(item=>item);
  
     player_filtered = [...new Set(player_filtered)];
-    console.log(content)
-    console.log(player)
     player.forEach((pl,index)=>{
       pl.forEach((n)=>{
         if(content.length > player_filtered.length){
@@ -50,7 +48,7 @@ async function chart(){
         }
       })
     });
-    console.log(chartdataset)
+
   
     let index = chartdataset.findIndex(subArray => subArray.includes('待定'));
     if (index !== -1) {
@@ -101,8 +99,6 @@ async function chart(){
 	  let g =[svg.append("g").attr("transform","translate(250,20)")
 	    ,svg.append("g").attr("transform","translate(650,100)")];
 
-    
-    console.log(chartdataset)
 	   let bp=[ viz.bP()
       .data(chartdataset)
       .min(20)
