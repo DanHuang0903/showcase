@@ -83,10 +83,9 @@ function drawDonut(data){
         girls.push(gn);
     })
 
+    
     label = label.map( l => l + '岁');
-    console.log(label)
-    console.log(boys);
-    console.log(girls);
+
     let boyLabels = [];
     boys.forEach(b => {
         let element = '男孩年龄' + b;
@@ -159,7 +158,7 @@ function drawChart(data){
         let parents = data.成人人数;
         let total = data.总人数;
         let barChart = $('#guest-chart');
-
+   
          barChart.height(350);
          barChart.width(990);
          new Chart(barChart, {
@@ -192,7 +191,7 @@ function drawChart(data){
              plugins: {
              title: {
                  display: true,
-                 text: '家庭人数分布',
+                 text: '家庭人数分布 - 共' + family.length + ' 家人',
                  font:{
                  size: 16
                  }
@@ -273,7 +272,7 @@ function drawPie(data){
                 display: true,
                 position: 'top',
                 align: 'start',
-                text: "总数统计 - " + total + " in total",
+                text: "总数统计 - 共" + total + "人",
                 font:{
                 size: 16
                 }
