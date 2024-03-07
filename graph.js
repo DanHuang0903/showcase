@@ -60,7 +60,7 @@ async function chart(){
 	 d3.select("#chart").selectAll('svg').remove();
 
 	 let width = 780;
- 	 let height = 610;
+ 	 let height = 640;
 
 
   
